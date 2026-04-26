@@ -135,7 +135,7 @@ public class RideRepository implements RideRepositoryInt{
     }
 
     @Override
-    public void delete(int rideId) throws SQLException {
+    public boolean delete(int rideId) {
         String sql = "DELETE FROM ride WHERE id=?";
 
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -144,9 +144,14 @@ public class RideRepository implements RideRepositoryInt{
 
             if (affectedRows > 0) {
                 Logs.info("Поездка удалена, id: " + rideId);
+                return true;
             } else {
-                throw new SQLException("Поездка не найдена для удаления");
+                Logs.error("Поездка с id " + rideId + " не найдена для удаления", null);
+                return false;
             }
+        } catch (SQLException e) {
+            Logs.error("Ошибка при удалении поездки. id:" + rideId, e);
+            return false;
         }
     }
 

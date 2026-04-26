@@ -2,7 +2,6 @@ package repository;
 
 import connect.DataConnect;
 import enity.User;
-import connect.DataConnect;
 import util.Logs;
 
 import java.sql.*;
@@ -120,20 +119,24 @@ public class UserRepository implements UserRepositoryInt{
     }
 
     @Override
-    public void delete(int userId) throws SQLException {
+    public boolean delete(int userId) {
         String sql = "DELETE FROM users WHERE id = ?";
 
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, userId);
-            int affectedRows = ps.executeUpdate("Пользователь не найден для удаления");
+            int affectedRows = ps.executeUpdate();
 
-            if (affectedRows == 0) {
-                throw new SQLException();
+            if (affectedRows > 0) {
+                Logs.info("Пользователь удалён, id: " + userId);
+                return true;
+            } else {
+                Logs.error("Пользователь с id " + userId + " не найден для удаления", null);
+                return false;
             }
-
-            Logs.info("Пользователь удалён, id: " + userId);
+        } catch (SQLException e) {
+            Logs.error("Ошибка при удалении пользователя. id:" + userId, e);
+            return false;
         }
-
     }
 
     @Override

@@ -131,7 +131,7 @@ public class PaymentRepository implements PaymentRepositoryInt {
     }
 
     @Override
-    public void delete(int paymentId) throws SQLException {
+    public boolean delete(int paymentId) {
         String sql = "DELETE FROM payment WHERE id=?";
 
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -140,11 +140,15 @@ public class PaymentRepository implements PaymentRepositoryInt {
 
             if (affectedRows > 0) {
                 Logs.info("Payment удалён, id: " + paymentId);
+                return true;
             } else {
-                throw new SQLException("Payment не найден для удаления");
+                Logs.error("Payment с id " + paymentId + " не найден для удаления", null);
+                return false;
             }
+        } catch (SQLException e) {
+            Logs.error("Ошибка при удалении Payment. id:" + paymentId, e);
+            return false;
         }
-
     }
 
     @Override

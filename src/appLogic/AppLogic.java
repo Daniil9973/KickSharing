@@ -175,15 +175,12 @@ public class AppLogic {
             Logs.error("Ошибка: Пользователь с ID " + userId + " не найден!", null);
             return false;
         }
-        try {
-            userRepo.delete(userId);
-            Logs.info("Пользователь с ID " + userId + " успешно удалён");
-            return true;
-        } catch (Exception e){
-            Logs.error("Пользователь с ID " + userId + " не удалён", e);
-            return false;
-        }
 
+        boolean deleted = userRepo.delete(userId);
+        if (deleted) {
+            Logs.info("Пользователь с ID " + userId + " успешно удалён");
+        }
+        return deleted;
     }
 
     public boolean deleteRide(int rideId) {
@@ -191,15 +188,12 @@ public class AppLogic {
             Logs.error("Ошибка: Поездка с ID " + rideId + " не найдена!", null);
             return false;
         }
-        try {
-            rideRepo.delete(rideId);
-            Logs.info("Поездка с ID " + rideId + " успешно удалена");
-            return true;
-        } catch (Exception e){
-            Logs.error("Поездка с ID " + rideId + " не удалён", e);
-            return false;
-        }
 
+        boolean deleted = rideRepo.delete(rideId);
+        if (deleted) {
+            Logs.info("Поездка с ID " + rideId + " успешно удалена");
+        }
+        return deleted;
     }
 
     public boolean deletePayment(int paymentId) {
@@ -207,14 +201,12 @@ public class AppLogic {
             Logs.error("Ошибка: Платёж с ID " + paymentId + " не найден!", null);
             return false;
         }
-        try {
-            paymentRepo.delete(paymentId);
+
+        boolean deleted = paymentRepo.delete(paymentId);
+        if (deleted) {
             Logs.info("Платёж с ID " + paymentId + " успешно удалён");
-            return true;
-        } catch (SQLException e) {
-            Logs.error("Платёж с ID " + paymentId + " не удалён", e);
-            return false;
         }
+        return deleted;
     }
 
     public String getBonusCardStatus(int userId) {

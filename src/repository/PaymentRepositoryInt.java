@@ -2,13 +2,12 @@ package repository;
 
 import enity.Payment;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public interface PaymentRepositoryInt {
     Payment create(Payment payment);
     Payment update(Payment payment);
-    void delete(int paymentId) throws SQLException;
+    boolean delete(int paymentId);
     boolean existsById(int paymentId);
 
     double getTotalPaymentsByUserId(int userId);

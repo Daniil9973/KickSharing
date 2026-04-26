@@ -9,7 +9,7 @@ import java.util.List;
 public interface RideRepositoryInt {
     Ride create(Ride ride);
     Ride update(Ride ride);
-    void delete(int RideId) throws SQLException;
+    boolean delete(int RideId);
 
     boolean existsById(int RideId);
 

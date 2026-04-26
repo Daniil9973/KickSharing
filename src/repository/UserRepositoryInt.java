@@ -9,7 +9,7 @@ public interface UserRepositoryInt {
 
     User create(User user);
     User update(User user);
-    void delete(int userId) throws SQLException;
+    boolean delete(int userId);
     boolean existsById(int userId);
 
     User findById(int userId);

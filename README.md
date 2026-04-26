@@ -18,25 +18,20 @@
    ```
 
 2. Выполните скрипт создания таблиц:
-    - Откройте файл `src/main/resources/db/schema.sql` в pgAdmin.
+    - В pgAdmin: откройте файл `src/main/resources/db/schema.sql` и выполните
 
 3. Настройте подключение к БД:
     - Скопируйте `src/main/resources/config.properties.sample` в `config.properties`.
     - Укажите свой пароль в `config.properties`.
 
 4. Запустите приложение:
-    - Через IDEA либо скомпилируйте и запустите через командную строку:
-
-      ```bash
-      javac -d out src/main/java/**/*.java
-      java -cp out appLogic.Main
-      ```
+   - Через IDEA:
+        - Убедитесь, что lib/postgresql-42.7.10.jar добавлен в зависимости проекта
+        - Запустите appLogic/Main.java
 
 ## Функции
 
-- Создание пользователя.
-- Создание поездки.
-- Создание платежа.
+- CRUD для каждой сущности
 - Просмотр статуса бонусной карты (бронзовая/серебряная/золотая).
 
 ## Логи
